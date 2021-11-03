@@ -1,6 +1,7 @@
 package com.assignment.stringmixer.controller;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -8,26 +9,19 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/api")
 public class StringMixerController {
 
-    @PostMapping("/mix")
-    public String mixStrings(@RequestBody String[] inputs) {
-      return "";
-    }
-
-    @GetMapping("/mix")
-    public String mixStrings2() {
-        String s1 = "mmmmm m nnnnn y&friend&Paul has heavy hats! &";
-        String s2 = "my frie n d Joh n has ma n y ma n y frie n ds n&";
-
+    @GetMapping(value = "/mix")
+    public Object getMixedString(@RequestParam("s1") String s1, @RequestParam("s2") String s2) {
         String[] strings = { s1, s2 };
 
         HashMap<Character, Integer> map1 = new HashMap<Character, Integer>();
@@ -46,7 +40,7 @@ public class StringMixerController {
 
                 Integer val = listOfMaps.get(j).get(c);
                 if (val != null) {
-                    listOfMaps.get(j).put(c, new Integer(val + 1));
+                    listOfMaps.get(j).put(c, val + 1);
                 } else {
                     listOfMaps.get(j).put(c, 1);
                 }
@@ -54,17 +48,15 @@ public class StringMixerController {
 
         }
 
-        String result = "";
         HashMap<Character, Integer> mergedMap = new HashMap<Character, Integer>(map1);
         map2.forEach((key, value) -> mergedMap.merge(key, value, (v1, v2) -> v1.equals(v2) ? v1 : v1 > v2 ? v1 : v2));
 
         LinkedHashMap<Character, Integer> sortedMap = mergedMap.entrySet().stream()
-                .sorted(Map.Entry.<Character, Integer>comparingByValue(Comparator.reverseOrder())
-                        .thenComparing(Map.Entry.comparingByKey()))
+                .sorted(Map.Entry.<Character, Integer>comparingByValue(Comparator.reverseOrder()))
                 .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (oldValue, newValue) -> oldValue,
                         LinkedHashMap::new));
 
-        System.out.println(sortedMap);
+        List<String> subStringList = new ArrayList<String>();
 
         for (Map.Entry<Character, Integer> entry : sortedMap.entrySet()) {
             Integer mergedFrequency = entry.getValue();
@@ -74,24 +66,23 @@ public class StringMixerController {
             if (mergedFrequency <= 1) {
                 continue;
             }
-            if (s2Frequency.equals(null)) {
-                result += "1:" + entry.getKey().toString().repeat(s1Frequency);
-            } else if (s1Frequency.equals(null)) {
-                result += "2:" + entry.getKey().toString().repeat(s2Frequency);
+            if (s2Frequency == null) {
+                subStringList.add("1:" + entry.getKey().toString().repeat(s1Frequency));
+            } else if (s1Frequency == null) {
+                subStringList.add("2:" + entry.getKey().toString().repeat(s2Frequency));
             } else if (s1Frequency.equals(s2Frequency)) {
-                result += "=:" + entry.getKey().toString().repeat(s1Frequency);
+                subStringList.add("=:" + entry.getKey().toString().repeat(s1Frequency));
             } else if (s1Frequency > s2Frequency) {
-                result += "1:" + entry.getKey().toString().repeat(s1Frequency);
+                subStringList.add("1:" + entry.getKey().toString().repeat(s1Frequency));
             } else {
-                result += "2:" + entry.getKey().toString().repeat(s2Frequency);
+                subStringList.add("2:" + entry.getKey().toString().repeat(s2Frequency));
             }
-            result += "/";
+
         }
+        subStringList.sort(Comparator.comparingInt(String::length).reversed().thenComparing(Comparator.naturalOrder()));
+        String result = String.join("/", subStringList);
+        return Collections.singletonMap("result", result);
 
-        result = result.substring(0, result.length() - 1);
-
-        System.out.println(result);
-        return "";
     }
 
 }
