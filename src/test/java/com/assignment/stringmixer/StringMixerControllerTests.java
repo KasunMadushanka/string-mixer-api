@@ -6,9 +6,6 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
-
 import com.assignment.stringmixer.controller.StringMixerController;
 import com.assignment.stringmixer.services.StringMixerService;
 

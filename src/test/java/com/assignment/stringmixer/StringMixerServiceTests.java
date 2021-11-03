@@ -7,7 +7,7 @@ import com.assignment.stringmixer.services.StringMixerServiceImpl;
 
 import org.junit.jupiter.api.Test;
 
-public class StringMixerServiceTest {
+public class StringMixerServiceTests {
 
     @Test
     public void testMix() {
