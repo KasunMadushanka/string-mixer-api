@@ -10,7 +10,7 @@
 npm install expo-cli --global
 ```
 ### Installing Dependencies
-Go to the project directory and install project dependencies.
+Go to the project directory and install the application's dependencies.
 ```
 npm install
 ```
