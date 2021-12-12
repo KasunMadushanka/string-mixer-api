@@ -3,7 +3,7 @@
 ### Project Test instructions can be found in the `Assessment.md` file.
 <br/>
 
-# Run project in development
+# Run Project in Development
 
 ### Installing Expo Command Line Interface
 ```
