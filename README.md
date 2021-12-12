@@ -14,6 +14,8 @@ Go to the project directory and install the application's dependencies.
 ```
 npm install
 ```
+### Install Expo app through your device's app store (iOS or Android)
+
 ### Running the App 
 ```
 expo start
