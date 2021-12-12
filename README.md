@@ -19,6 +19,6 @@ npm install
 expo start
 ```
 ### Running the App on Your Mobile Device
-#### Install Expo app through your device's app store (iOS or Android). Then use your mobile device to scan the provided QR code displayed in the command line interface.
+Install Expo app through your device's app store (iOS or Android). Then use your mobile device to scan the provided QR code displayed in the command line interface.
 
 
