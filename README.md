@@ -3,13 +3,13 @@
 ### Project Test instructions can be found in the `Assessment.md` file.
 <br/>
 
-# Run project in development
+## Run project in development
 
 #### Install dependencies:
 ```
 npm install
 ```
-### Run project: 
+#### Run project: 
 ```
 expo start
 ```
