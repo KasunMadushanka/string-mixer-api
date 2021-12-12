@@ -5,11 +5,16 @@
 
 ## Run project in development
 
-#### Install dependencies:
+### Installing Expo Command Line Interface
+```
+npm install expo-cli --global
+```
+### Installing Dependencies
+Go to the project directory and install the application's dependencies.
 ```
 npm install
 ```
-#### Run project: 
+### Running the App 
 ```
 expo start
 ```
